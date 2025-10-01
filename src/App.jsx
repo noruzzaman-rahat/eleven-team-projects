@@ -16,8 +16,14 @@ function App() {
 
   const [toggle, setToggle] = useState(true);
   const [availalbeBalance, setAvailableBalance] = useState(1000000);
-
   const[purchasedPlayers, setPurchasedPlayers] = useState([])
+
+  const removePlayer = (p) =>{
+    const fileteredData = purchasedPlayers.filter(ply => ply.player_name !== p.player_name)
+    console.log(fileteredData)
+    setPurchasedPlayers(fileteredData)
+    setAvailableBalance(availalbeBalance + parseInt(p.price.split("$").join("").split(",").join("")))
+  }
   
 
   return (
@@ -39,7 +45,9 @@ function App() {
         purchasedPlayers={purchasedPlayers} 
         setPurchasedPlayers={setPurchasedPlayers}
         availalbeBalance={availalbeBalance} setAvailableBalance={setAvailableBalance} playersPromise={playersPromise}></AvailablePlayers>
-      </Suspense> : <SelectedPlayers purchasedPlayers={purchasedPlayers}></SelectedPlayers>
+      </Suspense> : <SelectedPlayers 
+      removePlayer={removePlayer}
+      purchasedPlayers={purchasedPlayers}></SelectedPlayers>
       }
       
       
